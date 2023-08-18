@@ -61,6 +61,20 @@ services:
       - clinic_network
     restart: on-failure
 
+  ui-service:
+    build: ./ui-service
+    image: ui-service
+    container_name: ui-service
+    depends_on:
+      - patient-service
+    ports:
+      - "8090:8090"
+    networks:
+      - clinic_network
+    restart: on-failure
+    environment:
+      FEIGN_PATIENT_URL: http://patient-service:8081
+
 networks: # Ajout de la section réseaux
   clinic_network: {}
 
