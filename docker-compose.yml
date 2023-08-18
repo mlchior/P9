@@ -1,9 +1,39 @@
-version: '3'
+version: '3.9'
 services:
+
+  mysqldb:
+    image: mysql:8
+    restart: unless-stopped
+    container_name: mysqldb
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: patient
+    volumes:
+      - sql-data:/var/lib/mysql
+    networks:
+      - clinic_network
+
   patient-service:
-    build: ./patient-service # Chemin vers le répertoire contenant le Dockerfile
+    build: ./patient-service
+    image: patient-service
+    container_name: patient-service
+    depends_on:
+      - mysqldb
     ports:
       - "8081:8081"
     environment:
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=rootroot
+      MYSQL_DATABASE: patient
+      MYSQL_URL: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootroot
+    networks:
+      - clinic_network
+    restart: on-failure
+
+networks: # Ajout de la section réseaux
+  clinic_network: {}
+
+volumes:
+  sql-data:
