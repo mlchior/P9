@@ -32,8 +32,39 @@ services:
       - clinic_network
     restart: on-failure
 
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - clinic_network
+
+  note-service:
+    build: ./note-service
+    image: note-service
+    container_name: note-service
+    depends_on:
+      - mongodb
+      - patient-service
+    ports:
+      - "8082:8082"
+    environment:
+        MONGODB_HOST: mongodb
+        MONGODB_PORT: 27017
+        MONGODB_DB: note
+        PATIENT_PORT: 8081
+    networks:
+      - clinic_network
+    restart: on-failure
+
 networks: # Ajout de la section réseaux
   clinic_network: {}
 
 volumes:
   sql-data:
+  mongodb-data:
+
