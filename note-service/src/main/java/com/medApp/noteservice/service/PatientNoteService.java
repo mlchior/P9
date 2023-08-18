@@ -21,4 +21,25 @@ public class PatientNoteService {
     public List<PatientNote> getNotesByPatientId(Long patId) {
         return patientNoteRepository.findByPatId(patId);
     }
+
+    public List<PatientNote> findNotesByPatientId(Long patId) {
+        return patientNoteRepository.findByPatId(patId);
+    }
+
+
+
+
+    public PatientNote updateNote(String noteId, String newNote) {
+        PatientNote patientNote = patientNoteRepository.findById(noteId)
+                .orElseThrow(() -> new IllegalArgumentException("Note with id " + noteId + " not found"));
+
+        patientNote.setNote(newNote);
+        patientNoteRepository.save(patientNote);
+        return patientNote;
+    }
+
+    public PatientNote getNoteById(String noteId) {
+        return patientNoteRepository.findById(noteId)
+                .orElseThrow(() -> new IllegalArgumentException("Note with id " + noteId + " not found"));
+    }
 }
