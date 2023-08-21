@@ -5,11 +5,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @FeignClient(name = "patient-service", url = "${feign.patient-service.url}")
 public interface PatientServiceClient {
 
     @GetMapping("/patients")
-    ResponseEntity<Iterable<PatientDTO>> findAllPatients();
+    List<PatientDTO> findAllPatients();
 
     @PostMapping("/patient/add")
     ResponseEntity<PatientDTO> addPatient(@RequestBody PatientDTO patient);
@@ -18,5 +20,7 @@ public interface PatientServiceClient {
     ResponseEntity<PatientDTO> updatePatient(@PathVariable("id") Long id, @RequestBody PatientDTO patient);
 
     @GetMapping("/patient/{id}")
-    ResponseEntity<PatientDTO> findPatientById(@PathVariable("id") Long id);
+    PatientDTO getPatient(@PathVariable("id") Long id);
+
+
 }

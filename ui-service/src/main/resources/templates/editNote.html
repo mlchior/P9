@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>Edit Patient Note</title>
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="row"><h2>Edit Note</h2></div>
+  <div class="row">
+    <form th:action="@{/patientNotes/edit}" method="post">
+      <input type="hidden" name="noteId" th:value="${noteId}" />
+      <div class="form-group">
+        <label for="note">Note:</label>
+        <textarea class="form-control" id="note" name="note" th:text="${note.note}"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Update Note</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

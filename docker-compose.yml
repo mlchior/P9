@@ -67,6 +67,7 @@ services:
     container_name: ui-service
     depends_on:
       - patient-service
+      - note-service
     ports:
       - "8090:8090"
     networks:
@@ -74,6 +75,7 @@ services:
     restart: on-failure
     environment:
       FEIGN_PATIENT_URL: http://patient-service:8081
+      FEIGN_NOTE_URL: http://note-service:8082
 
 networks: # Ajout de la section réseaux
   clinic_network: {}

@@ -39,4 +39,14 @@ public class PatientNoteController {
             return new ResponseEntity<>("An error occurred while updating the note", HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/delete/{noteId}")
+    public ResponseEntity<String> deleteNoteById(@PathVariable String noteId) {
+        try {
+            patientNoteService.deleteNoteById(noteId);
+            return new ResponseEntity<>("Note deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while deleting the note", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -64,4 +64,9 @@ public class PatientService {
             return null;
         }
     }
+
+
+    public void deletePatient(Long id) {
+        patientRepository.deleteById(id);
+    }
 }
