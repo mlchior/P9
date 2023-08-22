@@ -11,6 +11,7 @@
   <div class="row">
     <form th:action="@{/patientNotes/edit}" method="post">
       <input type="hidden" name="noteId" th:value="${noteId}" />
+      <input type="hidden" name="patId" th:value="${patId}" />
       <div class="form-group">
         <label for="note">Note:</label>
         <textarea class="form-control" id="note" name="note" th:text="${note.note}"></textarea>

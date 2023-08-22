@@ -20,5 +20,6 @@ public interface NoteServiceClient {
     ResponseEntity<String> updateNote(@PathVariable String noteId,
                                       @RequestParam("note") String newNote);
 
-
+    @GetMapping("/patHistory/note/{noteId}")
+    ResponseEntity<PatientNoteDTO> getNoteById(@PathVariable String noteId);
 }

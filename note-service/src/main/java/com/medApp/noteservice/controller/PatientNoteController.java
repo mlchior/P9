@@ -48,5 +48,10 @@ public class PatientNoteController {
             return new ResponseEntity<>("An error occurred while deleting the note", HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/note/{noteId}")
+    public ResponseEntity<PatientNote> getNoteById(@PathVariable String noteId) {
+        PatientNote patientNote = patientNoteService.findNoteById(noteId);
+        return ResponseEntity.ok(patientNote);
+    }
 
 }

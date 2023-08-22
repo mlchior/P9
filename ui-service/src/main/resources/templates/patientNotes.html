@@ -3,32 +3,37 @@
 <head>
     <meta charset="utf-8"/>
     <title>Patient Notes</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <div class="row"><h2>Patient Notes</h2></div>
+<div class="container mt-5">
     <div class="row">
-        <a th:href="@{/patientNotes/add/{patId}(patId=${patId})}" class="btn btn-primary">Add Note</a>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Note ID</th>
-                <th>Content</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="note : ${notes}">
-                <td th:text="${note.id}"></td>
-                <td th:text="${note.note}"></td>
-                <td>
-                    <a th:href="@{/patientNotes/edit/{id}(id=${note.id})}" class="btn btn-success btn-sm">Edit</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h2 class="col-9">Patient Notes</h2>
+        <div class="col-3 text-right">
+            <a th:href="@{/patientNotes/add/{patId}(patId=${patId})}" class="btn btn-primary">Add Note</a>
+        </div>
     </div>
-</div>
+    <h4 class="mb-4">Analysis: <span th:text="${assessment}"></span></h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Note ID</th>
+            <th>Content</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="note : ${notes}">
+            <td th:text="${note.id}"></td>
+            <td th:text="${note.note}"></td>
+            <td>
+                <a th:href="@{/patientNotes/edit/{id}(id=${note.id})}" class="btn btn-success btn-sm">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="col-3 text-right">
+        <a href="/viewPatients" class="btn btn-primary">Return to Patients</a>
+    </div></div>
 </body>
 </html>

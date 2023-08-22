@@ -1,5 +1,6 @@
 package com.medApp.uiservice.controller;
 
+import com.medApp.uiservice.client.AnalyzerServiceClient;
 import com.medApp.uiservice.client.NoteServiceClient;
 import com.medApp.uiservice.client.PatientServiceClient;
 import com.medApp.uiservice.dto.PatientDTO;
@@ -20,6 +21,9 @@ public class UiController {
 
     @Autowired
     private NoteServiceClient noteServiceClient; // Client Feign
+
+    @Autowired
+    private AnalyzerServiceClient analyzerServiceClient; // Client Feign
 ////////////////////// PATIENTS //////////////////////
 
     @GetMapping("/viewPatients")
@@ -54,16 +58,17 @@ public class UiController {
     }
 
 
-
 //////////// NOTES CONTROLLER ////////////////
 
-@GetMapping("/patientNotes/{patId}")
-public String viewPatientNotes(@PathVariable Long patId, Model model) {
-    ResponseEntity<List<PatientNoteDTO>> response = noteServiceClient.getPatientHistory(patId);
-    model.addAttribute("notes", response.getBody());
-    model.addAttribute("patId", patId);
-    return "patientNotes"; // Vue Thymeleaf pour afficher les notes
-}
+    @GetMapping("/patientNotes/{patId}")
+    public String viewPatientNotes(@PathVariable Long patId, Model model) {
+        ResponseEntity<List<PatientNoteDTO>> response = noteServiceClient.getPatientHistory(patId);
+        ResponseEntity<String> assessment = analyzerServiceClient.getPatientAssessment(patId);
+        model.addAttribute("notes", response.getBody());
+        model.addAttribute("patId", patId);
+        model.addAttribute("assessment", assessment.getBody());
+        return "patientNotes"; // Vue Thymeleaf pour afficher les notes
+    }
 
     @GetMapping("/patientNotes/add/{patId}")
     public String showAddNoteForm(@PathVariable Long patId, Model model) {
@@ -80,20 +85,29 @@ public String viewPatientNotes(@PathVariable Long patId, Model model) {
 
     @GetMapping("/patientNotes/edit/{id}")
     public String showEditNoteForm(@PathVariable String id, Model model) {
-        // Rechercher la note spécifique ici si nécessaire
+        ResponseEntity<PatientNoteDTO> noteResponse = noteServiceClient.getNoteById(id);
+        PatientNoteDTO note = noteResponse.getBody();
+
+        if (note != null) {
+            model.addAttribute("note", note);
+            model.addAttribute("patId", note.getPatId()); // Ajouté ici
+        } else {
+            // Vous pouvez choisir d'ajouter une logique d'erreur ici si la note est nulle.
+        }
+
         model.addAttribute("noteId", id);
         return "editNote"; // Vue Thymeleaf pour éditer une note
     }
 
     @PostMapping("/patientNotes/edit")
     public String editNote(@RequestParam("noteId") String noteId,
-                           @RequestParam("note") String newNote) {
+                           @RequestParam("note") String newNote,
+                           @RequestParam("patId") Long patId) { // add patId parameter
         noteServiceClient.updateNote(noteId, newNote);
-        return "redirect:/patientNotes"; // Rediriger vers la liste des notes
+        return "redirect:/patientNotes/" + patId; // redirect to patient-specific notes
     }
 
-
-
-
-
 }
+//////////// ANALYZER CONTROLLER ////////////////
+
+

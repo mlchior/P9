@@ -46,4 +46,9 @@ public class PatientNoteService {
     public void deleteNoteById(String noteId) {
         patientNoteRepository.deleteById(noteId);
     }
+
+    public PatientNote findNoteById(String noteId) {
+        return patientNoteRepository.findById(noteId)
+                .orElseThrow(() -> new IllegalArgumentException("Note with id " + noteId + " not found"));
+    }
 }
