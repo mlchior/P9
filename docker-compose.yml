@@ -61,6 +61,22 @@ services:
       - clinic_network
     restart: on-failure
 
+  analyzer-service:
+    build: ./analyzer-service
+    image: analyzer-service
+    container_name: analyzer-service
+    depends_on:
+      - note-service
+      - patient-service
+    ports:
+      - "8080:8080"
+    networks:
+      - clinic_network
+    restart: on-failure
+    environment:
+      FEIGN_PATIENT_URL: http://patient-service:8081
+      FEIGN_NOTE_URL: http://note-service:8082
+
   ui-service:
     build: ./ui-service
     image: ui-service
@@ -68,6 +84,7 @@ services:
     depends_on:
       - patient-service
       - note-service
+      - analyzer-service
     ports:
       - "8090:8090"
     networks:
@@ -76,6 +93,9 @@ services:
     environment:
       FEIGN_PATIENT_URL: http://patient-service:8081
       FEIGN_NOTE_URL: http://note-service:8082
+      FEIGN_ANALYZER_URL: http://analyzer-service:8080
+
+
 
 networks: # Ajout de la section réseaux
   clinic_network: {}

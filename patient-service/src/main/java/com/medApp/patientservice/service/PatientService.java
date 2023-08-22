@@ -58,11 +58,7 @@ public class PatientService {
 
     public Patient findPatientById(Long id) {
         Optional<Patient> patientOptional = patientRepository.findById(id);
-        if (patientOptional.isPresent()) {
-            return patientOptional.get();
-        } else {
-            return null;
-        }
+        return patientOptional.orElse(null);
     }
 
 

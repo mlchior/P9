@@ -18,6 +18,12 @@ public class PatientController {
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<Patient> findPatientById(@PathVariable("id") Long id) {
+        Patient patient = patientService.findPatientById(id);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
+
     @PostMapping("/patient/add")
     public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) {
         Patient newPatient = patientService.addPatient(patient);
