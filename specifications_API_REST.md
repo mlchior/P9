@@ -88,4 +88,3 @@ Mediscreen
   - **Contenu**: "An error occurred while deleting the note"
 - **Exemple d'appel**: `curl -X POST http://localhost:8082/patHistory/delete/64e36fe662deb05955dbc405`
 
-

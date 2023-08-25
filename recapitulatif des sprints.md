@@ -28,5 +28,6 @@
 ### Ce que j'aimerais faire différemment :
 - J'aurais pu rajouter des pipelines GitLab-CI.
 - Gestion de connexion pour le DR.
+- 
 
 ---

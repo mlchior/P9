@@ -36,7 +36,7 @@ public class PatientController {
         return new ResponseEntity<>(patientUpdated, HttpStatus.ACCEPTED);
     }
 
-   @PostMapping("/deletePatient/{id}")
+   @DeleteMapping("/deletePatient/{id}")
     public ResponseEntity<Patient> deletePatient(@PathVariable("id") Long id) {
         patientService.deletePatient(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

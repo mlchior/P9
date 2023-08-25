@@ -19,6 +19,8 @@ public interface NoteServiceClient {
     @PutMapping("/patHistory/update/{noteId}")
     ResponseEntity<String> updateNote(@PathVariable String noteId,
                                       @RequestParam("note") String newNote);
+    @DeleteMapping("/patHistory/delete/{noteId}")
+    ResponseEntity<String> deleteNoteById(@PathVariable String noteId);
 
     @GetMapping("/patHistory/note/{noteId}")
     ResponseEntity<PatientNoteDTO> getNoteById(@PathVariable String noteId);

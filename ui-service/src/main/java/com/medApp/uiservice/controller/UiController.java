@@ -57,6 +57,11 @@ public class UiController {
         return "redirect:/viewPatients"; // Redirect to patient listing page
     }
 
+    @GetMapping("/viewPatients/delete/{id}")
+    public String deletePatient(@PathVariable Long id) {
+        patientServiceClient.deletePatient(id);
+        return "redirect:/viewPatients"; // Redirect to patient listing page
+    }
 
 //////////// NOTES CONTROLLER ////////////////
 
@@ -80,7 +85,7 @@ public class UiController {
     public String addNote(@RequestParam("patId") Long patId,
                           @RequestParam("note") String note) {
         noteServiceClient.addNote(patId, note);
-        return "redirect:/patientNotes/" + patId; // Rediriger vers la liste des notes du patient
+        return "redirect:/patientNotes/" + patId;
     }
 
     @GetMapping("/patientNotes/edit/{id}")
@@ -90,13 +95,18 @@ public class UiController {
 
         if (note != null) {
             model.addAttribute("note", note);
-            model.addAttribute("patId", note.getPatId()); // Ajouté ici
+            model.addAttribute("patId", note.getPatId());
         } else {
-            // Vous pouvez choisir d'ajouter une logique d'erreur ici si la note est nulle.
+
         }
 
         model.addAttribute("noteId", id);
         return "editNote"; // Vue Thymeleaf pour éditer une note
+    }
+    @GetMapping("/patientNotes/delete/{noteId}")
+    public String deleteNote(@PathVariable String noteId, @RequestParam("patId") Long patId) {
+        noteServiceClient.deleteNoteById(noteId);
+        return "redirect:/patientNotes/" + patId;
     }
 
     @PostMapping("/patientNotes/edit")
@@ -107,7 +117,9 @@ public class UiController {
         return "redirect:/patientNotes/" + patId; // redirect to patient-specific notes
     }
 
+
+
 }
-//////////// ANALYZER CONTROLLER ////////////////
+
 
 

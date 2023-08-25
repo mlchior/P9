@@ -22,5 +22,6 @@ public interface PatientServiceClient {
     @GetMapping("/patient/{id}")
     PatientDTO getPatient(@PathVariable("id") Long id);
 
-
+    @DeleteMapping("/deletePatient/{id}")
+    ResponseEntity<String> deletePatient(@PathVariable("id") Long id);
 }
