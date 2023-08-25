@@ -78,6 +78,30 @@ public class AnalyserService {
         return analysis;
     }
 
+
+    //TODO : retourner le niveau de risque en fonction du nom de famille
+    public PatientAnalyseDTO analyzePatientByFamilyName(String familyName) {
+        List<PatientDTO> patients = patientServiceClient.findPatientsByFamilyName(familyName);
+
+        if (patients.isEmpty()) {
+            return null;
+        }
+
+        PatientDTO patient = patients.get(0);
+        List<PatientNoteDTO> patientNotes = patientNoteClient.getPatientHistory(patient.getId()).getBody();
+
+        long age = getAge(patient);
+        int triggerCount = countTriggers(patientNotes);
+        RiskLevel riskLevel = determineRiskLevel(age, triggerCount, patient.getSex());
+
+        PatientAnalyseDTO analysis = new PatientAnalyseDTO();
+        analysis.setLastName(patient.getFamily());
+        analysis.setAge(age);
+        analysis.setSex(patient.getSex());
+        analysis.setRiskLevel(riskLevel);
+        return analysis;
     }
+
+}
 
 

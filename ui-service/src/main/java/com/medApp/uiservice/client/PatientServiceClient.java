@@ -24,4 +24,6 @@ public interface PatientServiceClient {
 
     @DeleteMapping("/deletePatient/{id}")
     ResponseEntity<String> deletePatient(@PathVariable("id") Long id);
+    List<PatientDTO> findPatientsByFamilyName(@RequestParam("familyName") String familyName);
+
 }

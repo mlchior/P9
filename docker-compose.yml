@@ -11,7 +11,7 @@ services:
       MYSQL_ROOT_PASSWORD: rootroot
       MYSQL_DATABASE: patient
     volumes:
-      - sql-data:/var/lib/mysql
+      - sql-data:/var/lib/mysql # /var/lib/mysql is the default directory where mysql stores data files.
     networks:
       - clinic_network
 
@@ -39,7 +39,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongodb-data:/data/db
+      - mongodb-data:/data/db # /data/db is the default directory where mongodb stores data files.
     networks:
       - clinic_network
 

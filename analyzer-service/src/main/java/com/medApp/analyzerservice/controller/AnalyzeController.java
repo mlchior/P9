@@ -21,6 +21,12 @@ public class AnalyzeController {
         String response = "Patient: " + result.getLastName() + " (age " + result.getAge() + ") diabetes assessment is: " + result.getRiskLevel();
         return ResponseEntity.ok(response);
     }
+    @PostMapping("/assess/familyName")
+    public ResponseEntity<String> assessByFamilyName(@RequestParam String familyName) {
+        PatientAnalyseDTO result = analyserService.analyzePatientByFamilyName(familyName);
+        String response = "Patient: " + result.getLastName() + " (age " + result.getAge() + ") diabetes assessment is: " + result.getRiskLevel();
+        return ResponseEntity.ok(response);
+    }
 
 
 }

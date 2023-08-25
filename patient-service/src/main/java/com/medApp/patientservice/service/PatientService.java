@@ -65,4 +65,8 @@ public class PatientService {
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
     }
+
+    public List<Patient> findPatientsByFamilyName(String familyName) {
+        return patientRepository.findByFamily(familyName);
+    }
 }

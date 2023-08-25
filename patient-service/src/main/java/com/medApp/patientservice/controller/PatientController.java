@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 public class PatientController {
@@ -42,6 +44,10 @@ public class PatientController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @GetMapping("/patientsByFamilyName")
+    public ResponseEntity<List<Patient>> findPatientsByFamilyName(@RequestParam("familyName") String familyName) {
+        List<Patient> patients = patientService.findPatientsByFamilyName(familyName);
+        return new ResponseEntity<>(patients, HttpStatus.OK);
+    }
 
 }
