@@ -1,90 +1,116 @@
-Mediscreen
+# API Documentation for Mediscreen
 
+## Patients
 
-### Récupérer tous les patients
+### Get All Patients
 - **URL**: `/patients`
-- **Méthode**: `GET`
-- **Paramètres d'URL**: Aucun
-- **Réponse (réussite)**:
+- **Method**: `GET`
+- **URL Parameters**: None
+- **Response (Success)**:
   - **Code**: 200
-  - **Contenu**: Liste de patients
-- **Exemple d'appel**: `curl http://localhost:8081/patients`
+  - **Content**: List of patients
+- **Example Call**: `curl http://localhost:8081/patients`
 
-### Ajouter un patient
+### Add a Patient
 - **URL**: `/patient/add`
-- **Méthode**: `POST`
-- **Paramètres de données**:
-  - JSON du patient à ajouter
-- **Réponse (réussite)**:
+- **Method**: `POST`
+- **Data Parameters**:
+  - JSON object representing the patient to add
+- **Response (Success)**:
   - **Code**: 201
-  - **Contenu**: Patient créé
-- **Exemple d'appel**: `curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "age": 30}' http://localhost:8081/patient/add`
+  - **Content**: Created patient
+- **Example Call**: `curl -X POST -H "Content-Type: application/json" -d '{"name": "John", "age": 30}' http://localhost:8081/patient/add`
 
-### Mettre à jour un patient
+### Update a Patient
 - **URL**: `/updatePatient/{id}`
-- **Méthode**: `PUT`
-- **Paramètres d'URL**:
-  - **Obligatoires**: `id` = ID du patient
-- **Paramètres de données**:
-  - JSON du patient à mettre à jour
-- **Réponse (réussite)**:
+- **Method**: `PUT`
+- **URL Parameters**:
+  - **Required**: `id` = Patient ID
+- **Data Parameters**:
+  - JSON object representing the patient to update
+- **Response (Success)**:
   - **Code**: 202
-  - **Contenu**: Patient mis à jour
-- **Exemple d'appel**: `curl -X PUT -H "Content-Type: application/json" -d '{"name": "John Updated", "age": 31}' http://localhost:8081/updatePatient/1`
+  - **Content**: Updated patient
+- **Example Call**: `curl -X PUT -H "Content-Type: application/json" -d '{"name": "John Updated", "age": 31}' http://localhost:8081/updatePatient/1`
 
-### Supprimer un patient
+### Delete a Patient
 - **URL**: `/deletePatient/{id}`
-- **Méthode**: `POST`
-- **Paramètres d'URL**:
-  - **Obligatoires**: `id` = ID du patient
-- **Réponse (réussite)**:
+- **Method**: `POST`
+- **URL Parameters**:
+  - **Required**: `id` = Patient ID
+- **Response (Success)**:
   - **Code**: 204
-  - **Contenu**: Aucun
-- **Exemple d'appel**: `curl -X POST http://localhost:8081/deletePatient/1`
+  - **Content**: No content
+- **Example Call**: `curl -X POST http://localhost:8081/deletePatient/1`
 
-### Ajouter une note
+## Patient Notes
+
+### Add a Note
 - **URL**: `/patHistory/add`
-- **Méthode**: `POST`
-- **Paramètres d'URL**:
-  - **Obligatoires**: `patId` = ID du patient, `note` = Note à ajouter
-- **Réponse (réussite)**:
+- **Method**: `POST`
+- **URL Parameters**:
+  - **Required**: `patId` = Patient ID, `note` = Note to add
+- **Response (Success)**:
   - **Code**: 200
-  - **Contenu**: "Note added successfully"
-- **Exemple d'appel**: `curl -X POST -d 'patId=1&note=NoteTextHere' http://localhost:8082/patHistory/add`
+  - **Content**: "Note added successfully"
+- **Example Call**: `curl -X POST -d 'patId=1&note=NoteTextHere' http://localhost:8082/patHistory/add`
 
-### Obtenir l'historique du patient
+### Get Patient History
 - **URL**: `/patHistory/{patId}`
-- **Méthode**: `GET`
-- **Paramètres d'URL**:
-  - **Obligatoires**: `patId` = ID du patient
-- **Réponse (réussite)**:
+- **Method**: `GET`
+- **URL Parameters**:
+  - **Required**: `patId` = Patient ID
+- **Response (Success)**:
   - **Code**: 200
-  - **Contenu**: Liste des notes du patient
-- **Exemple d'appel**: `curl http://localhost:8082/patHistory/1`
+  - **Content**: List of patient notes
+- **Example Call**: `curl http://localhost:8082/patHistory/1`
 
-### Mettre à jour une note
+### Update a Note
 - **URL**: `/patHistory/update/{noteId}`
-- **Méthode**: `PUT`
-- **Paramètres d'URL**:
-  - **Obligatoires**: `noteId` = ID de la note, `note` = Nouvelle note
-- **Réponse (réussite)**:
+- **Method**: `PUT`
+- **URL Parameters**:
+  - **Required**: `noteId` = Note ID
+- **Data Parameters**:
+  - `note` = New note content
+- **Response (Success)**:
   - **Code**: 200
-  - **Contenu**: "Note updated successfully"
-- **Réponse (échec)**:
+  - **Content**: "Note updated successfully"
+- **Response (Failure)**:
   - **Code**: 400
-  - **Contenu**: "An error occurred while updating the note"
-- **Exemple d'appel**: `curl -X PUT -d 'note=UpdatedNoteTextHere' http://localhost:8082/patHistory/update/64e36fe662deb05955dbc405	`
+  - **Content**: "An error occurred while updating the note"
+- **Example Call**: `curl -X PUT -d 'note=UpdatedNoteTextHere' http://localhost:8082/patHistory/update/64e36fe662deb05955dbc405`
 
-### Supprimer une note
+### Delete a Note
 - **URL**: `/patHistory/delete/{noteId}`
-- **Méthode**: `POST`
-- **Paramètres d'URL**:
-  - **Obligatoires**: `noteId` = ID de la note
-- **Réponse (réussite)**:
+- **Method**: `POST`
+- **URL Parameters**:
+  - **Required**: `noteId` = Note ID
+- **Response (Success)**:
   - **Code**: 200
-  - **Contenu**: "Note deleted successfully"
-- **Réponse (échec)**:
+  - **Content**: "Note deleted successfully"
+- **Response (Failure)**:
   - **Code**: 400
-  - **Contenu**: "An error occurred while deleting the note"
-- **Exemple d'appel**: `curl -X POST http://localhost:8082/patHistory/delete/64e36fe662deb05955dbc405`
+  - **Content**: "An error occurred while deleting the note"
+- **Example Call**: `curl -X POST http://localhost:8082/patHistory/delete/64e36fe662deb05955dbc405`
 
+## Diabetes Assessment
+
+### Assess Patient by ID
+- **URL**: `/assess/id`
+- **Method**: `POST`
+- **Data Parameters**:
+  - `patId` = Patient ID
+- **Response (Success)**:
+  - **Code**: 200
+  - **Content**: Assessment result for the patient
+- **Example Call**: `curl -d "patId=1" -X POST http://localhost:8080/assess/id`
+
+### Assess Patient by Family Name
+- **URL**: `/assess/familyName`
+- **Method**: `POST`
+- **Data Parameters**:
+  - `familyName` = Family name of the patients to assess
+- **Response (Success)**:
+  - **Code**: 200
+  - **Content**: Assessment results for patients with the given family name
+- **Example Call**: `curl -d "familyName=Smith" -X POST http://localhost:8080/assess/familyName`
