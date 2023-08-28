@@ -16,7 +16,7 @@
 ### Ce qui aurait pu aller mieux :
 - Aucune remarque spécifique.
 ### Ce que j'aimerais faire différemment :
-- Aucune remarque spécifique.
+- Swagger pour la documentation de l'API.
 
 ---
 
@@ -27,5 +27,5 @@
 - La dockerisation a été compliquée.
 ### Ce que j'aimerais faire différemment :
 - J'aurais pu rajouter des pipelines GitLab-CI.
-- Gestion de connexion pour le DR.
+- Gestion de connexion pour le client.
 
